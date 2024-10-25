@@ -181,7 +181,7 @@ line-height: 24px;
 /* Gray/500 */
 color: #667085;
 }
-#submit button{
+.submit_button{
 /* _Button base */
 
 box-sizing: border-box;
