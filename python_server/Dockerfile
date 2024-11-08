@@ -7,6 +7,12 @@ WORKDIR /usr/src/app
 # Copy the Python server script into the container
 COPY server.py .
 
+
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    && rm -rf /var/lib/apt/lists/*
+
 # Expose the port that your Python server will run on
 EXPOSE 8000
 

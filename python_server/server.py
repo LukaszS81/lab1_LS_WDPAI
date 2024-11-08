@@ -3,6 +3,35 @@ import random
 from utils import random_int
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from typing import Type
+import psycopg2
+import os
+import time
+
+DB_HOST = os.environ.get('DB_HOST', 'postgres')
+DB_PORT = int(os.environ.get('DB_PORT', 5432))
+DB_NAME = os.environ.get('DB_NAME', 'mydatabase')
+DB_USER = os.environ.get('DB_USER', 'myuser')
+DB_PASSWORD = os.environ.get('DB_PASSWORD', 'mypassword')
+
+def connect_to_db():
+    while True:
+        try:
+            conn = psycopg2.connect(
+                host=DB_HOST,
+                port=DB_PORT,
+                dbname=DB_NAME,
+                user=DB_USER,
+                password=DB_PASSWORD
+            )
+            print("Połączono z bazą danych")
+            return conn
+        except psycopg2.OperationalError:
+            print("Błąd połączenia z bazą danych, ponawianie za 5 sekund...")
+            time.sleep(5)
+
+conn = connect_to_db()
+cursor = conn.cursor()
+
 
 
 # Define the request handler class by extending BaseHTTPRequestHandler.
