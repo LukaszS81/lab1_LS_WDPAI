@@ -60,7 +60,8 @@ function checkPrivacyPolicy(isAccepted) {
     }
     return true;
 }
-
+//Wysyłanie danych użytkownika na serwr
+//bez wysyłania id
 async function makePostRequest(url, data) {
     return await fetch(url, {
         method: "POST",
@@ -74,7 +75,7 @@ async function makePostRequest(url, data) {
         })
     });
 }
-
+//asychroniczna funkcja - wywoływana po otrzymaniu response
 async function processResponse(response) {
     if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
@@ -91,14 +92,15 @@ const USERS_API_URL = "http://localhost:8000/users";
 //Tworzenie przycisku usuwania powiązanego z id użytkownika
 function createDeleteButton(userId) {
     const deleteBtn = document.createElement("button");
-    deleteBtn.classList.add("remove-button");
+    deleteBtn.classList.add("remove_button");
     deleteBtn.setAttribute("data-id", userId);
 
     const del_user = document.createElement("span");
     del_user.textContent = "Delete user";
 
     deleteBtn.appendChild(del_user);
-
+    deleteBtn.classList.add("material-symbols-outlined");
+    deleteBtn.textContent = "delete";
     deleteBtn.addEventListener("click", () => {
         if (confirm("Are you sure you want to delete this user?")) {
             deleteUser(userId, deleteBtn);
@@ -153,11 +155,11 @@ export function renderUsers(users) {
 //Renderowanie użytkownika
 function createUserElement(user) {
     const wrapper = document.createElement("div");
-    wrapper.classList.add("users_list");
+    wrapper.classList.add("user_info");
 
     const userInfo = getUserInfo(user);
     const deleteButton = createDeleteButton(user.id);
-
+    deleteButton.classList.add("delete_button");
     wrapper.appendChild(userInfo);
     wrapper.appendChild(deleteButton);
 
@@ -166,11 +168,13 @@ function createUserElement(user) {
 //Uzupełnianie danych użytkownika
 function getUserInfo(user) {
     const userContainer = document.createElement("div");
-
+    userContainer.classList.add("user_container");
     const userName = document.createElement("div");
+    userName.classList.add("user_name");
     userName.textContent = `${user.first_name} ${user.last_name}`;
 
     const userRole = document.createElement("div");
+    userRole.classList.add("user_role");
     userRole.textContent = user.role;
 
     userContainer.appendChild(userName);

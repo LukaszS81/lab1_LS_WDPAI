@@ -18,3 +18,15 @@ services:
 
 networks:
   webnet:
+    postgres:
+    image: postgres:13
+    restart: always
+    environment:
+      - POSTGRES_USER=myuser
+      - POSTGRES_PASSWORD=mypassword
+      - POSTGRES_DB=mydatabase
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
+      - ./postgres_init:/docker-entrypoint-initdb.d/
+    networks:
+      - webnet

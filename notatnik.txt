@@ -1,0 +1,43 @@
+funkcja fetch odpowiada za obsługiwanie requestów
+
+makepostreqeust url- data serwera 
+data -dane które chcemy wysłać(dane użytkowników)
+
+  const response = await fetch
+(`${USERS_API_URL}/${userId}` - adres serwera z wskazaniem na dokładną osobę
+
+response fetchusers - pobranie użytkowników
+axios zamiast fetcha + link do backendu
+axios prze npm
+
+createuserElement 
+const wrapper przypisuje diva do zmiennej wrapper
+wrapper.classlist - użytkownicy wypisani
+wrapper.appenChild podpina rzecz(tekst lub inny znacznik) do ojca(do wrappera)
+
+Id jakbym chciał użytkownika to inkrementacja z +1
+
+miedzy klientem a serwerem
+
+fetch - pierwszy argument funkcji to jest url, drugi argument to obiekt który ma w 
+środku stringa post 
+OBSŁUGUJE REQEUSTY RÓŻNE
+
+get - działa jak post tylko zamiast wysyłania to pobierasz
+
+wymiana informacja między frontem a backiem poprzez fetch
+
+fetch to reqeust i oczekujemy response
+
+usuwanie przez porównywanie listy
+
+
+self.wfile.write(json.dumps(self.user_list).encode())
+zwracam posta jako całą listę użytkowników
+jest renderowane cały UY 
+
+asynchroniczna nie blokuje głównego wątku
+
+w get zwracamy całą user listę
+
+post po stronie serwera że otrzymuje informację od frontu dekoduje serwera i tworzy na podstyawie jsona nowe id

@@ -3,6 +3,166 @@ body{
     flex-direction: row;
     justify-content: center;
 }
+
+.user_role{
+    /* Subtitle */
+
+width: 207px;
+height: 19px;
+
+font-family: 'Manrope';
+font-style: normal;
+font-weight: 300;
+font-size: 14px;
+line-height: 19px;
+
+/* Neutral / 500 */
+color: #64748B;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+align-self: stretch;
+flex-grow: 0;
+
+}
+.remove_button{
+    width: 40px;
+    height: 40px;
+    background-color: var(--color-background);
+    border: none;
+    cursor: pointer;
+    color: var(--color-text-tertiary);
+    
+}
+.users_list{
+margin-top: 70px;
+width: 375px;
+display: flex;
+flex-direction: column;
+/* Text */
+
+width: 207px;
+height: 19px;
+font-family: 'Inter';
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 19px;
+/* identical to box height, or 220% */
+letter-spacing: -0.02em;
+/* Neutral / 800 */
+color: #191D23;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 1;
+
+}
+.delete_button{
+  /* Buttons */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: flex-start;
+padding: 0px;
+gap: 8px;
+
+width: 40px;
+height: 40px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 1;
+flex-grow: 0;
+/* _Button base */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 10px;
+gap: 8px;
+
+width: 40px;
+height: 40px;
+
+border-radius: 8px;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+}
+.user_name{
+    /* Name */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 0px;
+gap: 8px;
+
+width: 207px;
+height: 19px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+align-self: stretch;
+flex-grow: 0;
+
+}
+.user_info{
+    /* User */
+
+box-sizing: border-box;
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+align-items: center;
+padding: 8px 16px;
+gap: 12px;
+margin-bottom: 10px;
+width: 375px;
+height: 56px;
+
+/* Shades/White */
+background: #FFFFFF;
+border: 1px solid #D0D5DD;
+border-radius: 4px;
+
+}
+.user_container{
+/* Container */
+
+/* Auto layout */
+display: flex;
+flex-direction: column;
+align-items: center;
+padding: 0px;
+gap: 8px;
+
+width: 295px;
+height: 40px;
+
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+}
 #my_fancy_box{
     /* Contact page header */
 
