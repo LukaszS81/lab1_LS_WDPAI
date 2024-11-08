@@ -123,7 +123,7 @@ class SimpleRequestHandler(BaseHTTPRequestHandler):
 
         user_id = received_data['id']
 
-        SimpleRequestHandler.user_list = [user for user in self.user_list if user['id'] != user_id]
+        # SimpleRequestHandler.user_list = [user for user in self.user_list if user['id'] != user_id]
 
         cursor.execute("DELETE FROM users WHERE id = %s", (user_id,))
         conn.commit()
