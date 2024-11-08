@@ -80,6 +80,8 @@ class SimpleRequestHandler(BaseHTTPRequestHandler):
 
         self.end_headers()
 
+        user_list = fetch_users()
+
         self.wfile.write(json.dumps(self.user_list).encode()) # WARNING: user_list hardcoded
 
     def do_POST(self) -> None:
@@ -95,9 +97,14 @@ class SimpleRequestHandler(BaseHTTPRequestHandler):
             'last_name': received_data['lastName'],
             'role': received_data['role']
         }
+        cursor.execute(
+            "INSERT INTO users (first_name, last_name, role) VALUES (%s, %s, %s)",
+            (first_name, last_name, role)
+        )
+        conn.commit()
 
-        self.user_list.append(newUser)
-
+        user_list = fetch_users()
+       
         self.send_response(200)
         self.send_header('Content-type', 'application/json')
 
@@ -117,6 +124,11 @@ class SimpleRequestHandler(BaseHTTPRequestHandler):
         user_id = received_data['id']
 
         SimpleRequestHandler.user_list = [user for user in self.user_list if user['id'] != user_id]
+
+        cursor.execute("DELETE FROM users WHERE id = %s", (user_id,))
+        conn.commit()
+
+        user_list = fetch_users()
 
         self.send_response(200)
         self.send_header('Content-type', 'application/json')
