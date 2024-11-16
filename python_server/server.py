@@ -1,4 +1,5 @@
 import json
+import random
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from typing import Type
 import psycopg2
@@ -23,8 +24,9 @@ def connect_to_db():
             )
             print("Połączono z bazą danych")
             return conn
-        except psycopg2.OperationalError:
+        except psycopg2.OperationalError as e:
             print("Błąd połączenia z bazą danych, ponawianie za 5 sekund...")
+            print(e)
             time.sleep(5)
 
 conn = connect_to_db()
@@ -35,9 +37,19 @@ def fetch_users():
     return [{"id": user[0], "first_name": user[1], "last_name": user[2], "role": user[3]} for user in users]
 
 
+
 # Define the request handler class by extending BaseHTTPRequestHandler.
 # This class will handle HTTP requests that the server receives.
 class SimpleRequestHandler(BaseHTTPRequestHandler):
+
+    user_list = [
+        {
+            'id': 1,
+            'first_name': 'Michal',
+            'last_name': 'Mucha',
+            'role': 'Instructor'
+        }
+    ]
 
     def do_OPTIONS(self):
 
@@ -50,20 +62,25 @@ class SimpleRequestHandler(BaseHTTPRequestHandler):
         self.send_header("Access-Control-Allow-Headers", "Content-Type")
 
         self.end_headers()
-
+# Handles GET requests, responds with the list of users in JSON format.
     def do_GET(self) -> None:
-        self.send_response(200)
+        try:
+            cursor.execute("SELECT id, first_name, last_name, role FROM users;")
+            users = cursor.fetchall()  # Fetch all rows from the users table
+            self.user_list = [
+                {
+                    'id': user[0],
+                    'first_name': user[1],
+                    'last_name': user[2],
+                    'role': user[3]
+                }
+                for user in users
+            ]
 
-        self.send_header('Content-type', 'application/json')
+            self.wfile.write(json.dumps(self.user_list).encode())  # Sends user list as JSON response.
 
-        self.send_header('Access-Control-Allow-Origin', '*')
-
-        self.end_headers()
-        cursor.execute("SELECT * FROM users")
-        conn.commit()
-        user_list = fetch_users()
-
-        self.wfile.write(json.dumps(self.user_list).encode()) # WARNING: user_list hardcoded
+        except Exception as e:
+            self.wfile.write(json.dumps({"error": str(e)}).encode())
 
     def do_POST(self) -> None:
         content_length: int = int(self.headers['Content-Length'])
@@ -82,10 +99,6 @@ class SimpleRequestHandler(BaseHTTPRequestHandler):
 
         user_list = fetch_users()
 
-        self.send_response(200)
-        self.send_header('Content-type', 'application/json')
-        self.send_header('Access-Control-Allow-Origin', '*')
-        self.end_headers()
         self.wfile.write(json.dumps(user_list).encode())
 
     def do_DELETE(self) -> None:
@@ -106,16 +119,7 @@ class SimpleRequestHandler(BaseHTTPRequestHandler):
 
         user_list = fetch_users()
 
-        self.send_response(200)
-        self.send_header('Content-type', 'application/json')
-
-        self.send_header('Access-Control-Allow-Origin', '*')
-
-        self.end_headers()
-
-        self.wfile.write(json.dumps(self.user_list).encode())
-
-
+        self.wfile.write(json.dumps(user_list).encode())
 
 def run(
         server_class: Type[HTTPServer] = HTTPServer,
@@ -129,7 +133,6 @@ def run(
     print(f"Starting HTTP server on port {port}...")
 
     httpd.serve_forever()
-
 
 if __name__ == '__main__':
     run()
